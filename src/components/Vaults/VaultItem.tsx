@@ -32,14 +32,18 @@ const VaultItem = ({
   const { address, isConnected } = useAccount();
   useEffect(() => {
     const update = async () => {
-      if (address && isConnected && vaultAddress) {
-        const vaultContract = getVaultContract(vaultAddress);
-        const decimals = await vaultContract.decimals();
-        const bal = await vaultContract.balanceOf(address);
-        const result = Number(bal) / 10 ** Number(decimals);
-        setBalance(result.toString());
-      } else {
-        setBalance("---");
+      try {
+        if (address && isConnected && vaultAddress) {
+          const vaultContract = getVaultContract(vaultAddress);
+          const decimals = await vaultContract.decimals();
+          const bal = await vaultContract.balanceOf(address);
+          const result = Number(bal) / 10 ** Number(decimals);
+          setBalance(result.toString());
+        } else {
+          setBalance("---");
+        }
+      } catch (error) {
+        console.log("ERRORRRR:", error);
       }
     };
     update();
@@ -47,11 +51,15 @@ const VaultItem = ({
 
   useEffect(() => {
     const update = async () => {
-      const tokenContract = getTokenContract(assetAddress);
-      const totalBalance = await tokenContract.balanceOf(vaultAddress);
-      const decimals = await tokenContract.decimals();
-      const result = Number(totalBalance) / 10 ** Number(decimals);
-      setTotalAsset(result.toString());
+      try {
+        const tokenContract = getTokenContract(assetAddress);
+        const totalBalance = await tokenContract.balanceOf(vaultAddress);
+        const decimals = await tokenContract.decimals();
+        const result = Number(totalBalance) / 10 ** Number(decimals);
+        setTotalAsset(result.toString());
+      } catch (error) {
+        console.log("ERRORRRR:", error);
+      }
     };
     update();
   }, []);

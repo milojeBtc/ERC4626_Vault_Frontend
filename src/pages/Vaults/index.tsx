@@ -1,6 +1,7 @@
 import DepositWithdrawDialog from "@/components/dialog/DepositWithdrawDialog";
 import Filter from "@/components/Vaults/Filter";
 import VaultItem from "@/components/Vaults/VaultItem";
+import { sleep } from "@/utils/utils";
 import { token_abi } from "@/web3/abis/token_abi";
 import { vault_abi } from "@/web3/abis/vault_abi";
 import {
@@ -94,8 +95,15 @@ export default function Vaults() {
             amount.eq(deposit)
           ) {
             try {
-              const tx = await vaultContract.deposit(deposit, address);
-              await tx.wait();
+              if (deposit.gt(currentBalance)) {
+                toast.info("Insufficient Funds", {
+                  duration: 2500,
+                });
+                await sleep(500);
+              } else {
+                const tx = await vaultContract.deposit(deposit, address);
+                await tx.wait();
+              }
               setDepositStatus(false);
               setIsDepositOpen(false);
             } catch (error) {
@@ -106,6 +114,7 @@ export default function Vaults() {
           }
         });
 
+        const currentBalance = await tokenContract.balanceOf(address);
         const decimals = await tokenContract.decimals();
         const allowance = await tokenContract.allowance(address, vaultAddress);
 
@@ -117,6 +126,15 @@ export default function Vaults() {
           await tx.wait();
           console.log({ tx });
         } else {
+          if (deposit.gt(currentBalance)) {
+            toast.info("Insufficient Funds", {
+              duration: 2500,
+            });
+            await sleep(500);
+            setDepositStatus(false);
+            setIsDepositOpen(false);
+            return;
+          }
           await vaultContract.deposit(deposit, address);
           setDepositStatus(false);
           setIsDepositOpen(false);
@@ -146,7 +164,15 @@ export default function Vaults() {
           amount.toString(),
           decimals
         );
-        await vaultContract.redeem(withdrawAmount, address, address);
+        const currentBalance = await vaultContract.balanceOf(address);
+        if (withdrawAmount.gt(currentBalance)) {
+          toast.info("Insufficient Funds", {
+            duration: 2500,
+          });
+          await sleep(500);
+        } else {
+          await vaultContract.redeem(withdrawAmount, address, address);
+        }
 
         setDepositStatus(false);
         setIsDepositOpen(false);

@@ -37,24 +37,28 @@ const DepositWithdrawDialog = ({
   const [loading, setLoading] = useState(false);
   useEffect(() => {
     const udpate = async () => {
-      const tokenContract = getTokenContract(depositAsset);
-      const vaultContract = getVaultContract(vaultAddress);
+      try {
+        const tokenContract = getTokenContract(depositAsset);
+        const vaultContract = getVaultContract(vaultAddress);
 
-      let decimals = await tokenContract.decimals();
-      const allowance = await tokenContract.allowance(address, vaultAddress);
+        let decimals = await tokenContract.decimals();
+        const allowance = await tokenContract.allowance(address, vaultAddress);
 
-      const balance = await tokenContract.balanceOf(address);
-      decimals = await vaultContract.decimals();
+        const balance = await tokenContract.balanceOf(address);
+        decimals = await vaultContract.decimals();
 
-      const lpbalance = await vaultContract.balanceOf(address);
-      decimals = await tokenContract.decimals();
+        const lpbalance = await vaultContract.balanceOf(address);
+        decimals = await tokenContract.decimals();
 
-      let amount = ethers.utils.formatUnits(allowance, decimals);
-      setApproval(amount);
-      amount = ethers.utils.formatUnits(balance, decimals);
-      setBalance(amount);
-      amount = ethers.utils.formatUnits(lpbalance, decimals);
-      setLpBalance(amount);
+        let amount = ethers.utils.formatUnits(allowance, decimals);
+        setApproval(amount);
+        amount = ethers.utils.formatUnits(balance, decimals);
+        setBalance(amount);
+        amount = ethers.utils.formatUnits(lpbalance, decimals);
+        setLpBalance(amount);
+      } catch (error) {
+        console.log(error);
+      }
     };
     udpate();
   }, []);
@@ -96,6 +100,7 @@ const DepositWithdrawDialog = ({
               className="no-hover-input text-xl"
               type="text"
               value={amount}
+              readOnly
             />
             <div className="flex items-center gap-3">
               <img src={usdc} width="40px" />
