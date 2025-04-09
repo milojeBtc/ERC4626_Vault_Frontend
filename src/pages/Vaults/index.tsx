@@ -34,27 +34,6 @@ export default function Vaults() {
 
   const [option, setOption] = useState("");
 
-  const vaults = [
-    {
-      name: "USDC-AAVE",
-      symbol: "pUSDC",
-      apy: "11.1%",
-      borrowApy: "0.6%",
-      totalValue: "$21.6m",
-      userBalance: "$3339.41",
-      ethBalance: "1.76ETH",
-    },
-    {
-      name: "DAI-AAVE",
-      symbol: "pUSDC",
-      apy: "9.5%",
-      borrowApy: "1.2%",
-      totalValue: "$18.4m",
-      userBalance: "$2500.00",
-      ethBalance: "1.32ETH",
-    },
-  ];
-
   useEffect(() => {
     const getVaultCount = async () => {
       setLoading(true);
@@ -188,19 +167,19 @@ export default function Vaults() {
     }
   }, [isDepositOpen]);
   return (
-    <div className="mx-auto mt-20 flex w-[80%] flex-col items-center justify-center gap-5 bg-slateGray py-8 text-white">
+    <div className="mx-auto mt-20 flex w-[95%] flex-col items-center justify-center gap-5 bg-slateGray py-8 text-white lg:w-[80%]">
       <Filter />
       {!loading && (
-        <table className="border-gray-300 lg:text-md font-space w-full border-separate border-spacing-y-3 rounded-b-2xl rounded-t-lg bg-deepSlate p-3 text-lg ">
+        <table className="border-gray-300 font-space w-full border-separate border-spacing-y-3 rounded-b-2xl rounded-t-lg bg-deepSlate p-3">
           <thead className="bg-tColor5 text-md">
             <tr className="text-bgColor8">
               <th className="rounded-bl-lg rounded-tl-lg p-3 text-left">
                 Token
               </th>
-              <th className="text-left">APY(Yield)</th>
-              <th className="text-left">Bonous Rewards</th>
-              <th className="text-left">Total Deposits</th>
-              <th className="text-left">My Balance</th>
+              <th className="hidden text-left lg:table-cell">APY(Yield)</th>
+              <th className="hidden text-left lg:table-cell">Bonous Rewards</th>
+              <th className="hidden text-left lg:table-cell">Total Deposits</th>
+              <th className="hidden text-left lg:table-cell">My Balance</th>
               <th className="text-left">Manage</th>
             </tr>
           </thead>
@@ -211,8 +190,8 @@ export default function Vaults() {
                 key={index}
                 name={info.name}
                 symbol={info.symbol}
-                apy="10%"
-                borrowApy="10%"
+                apy="15%"
+                borrowApy="15%"
                 vaultAddress={info.vaultAddress}
                 assetAddress={info.asset}
                 setIsDepositOpen={() => {

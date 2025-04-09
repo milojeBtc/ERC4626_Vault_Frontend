@@ -69,39 +69,43 @@ const VaultItem = ({
     }
   }, [isConnected, address]);
   return (
-    <tr className="bg-slateIron text-left text-lg">
+    <tr className="bg-slateIron text-left text-sm xl:text-lg">
       {/* Token Information */}
-      <td className=" w-[250px]  p-3 text-left">
+      <td className="p-3 text-left">
         <div className="flex items-center gap-3 rounded-lg bg-ironBlue p-2">
-          <img src={usdc} width={"40px"} />
+          <img
+            src={usdc}
+            className="w-8 sm:w-8 md:w-10 lg:w-12 2xl:w-14"
+            alt="USDC logo"
+          />
           <div className="font-bold">{name}</div>
-          <div className="text-paleBlue">{symbol}</div>
+          <div className="hidden text-paleBlue md:block">{symbol}</div>
         </div>
       </td>
 
       {/* APY Information */}
-      <td className="w-[120px] p-3">
+      <td className="hidden p-3 lg:table-cell">
         <span className="text-paleLilac">{apy}</span>
-        <span className="text-paleBlue">APY</span>
+        {/* <span className="text-paleBlue">APY</span> */}
       </td>
 
-      <td className="w-[120px]  p-3">
+      <td className="hidden p-3 lg:table-cell">
         <span className="text-paleLilac">{borrowApy}</span>
-        <span className="text-paleBlue">APY</span>
+        {/* <span className="text-paleBlue">APY</span> */}
       </td>
 
       {/* Total Value */}
-      <td className="w-[150px]  p-3">{totalAsset}</td>
+      <td className="hidden p-3 lg:table-cell">{totalAsset}</td>
 
       {/* User Balance */}
-      <td className="w-[180px] p-3 text-sm">
+      <td className="hidden p-3 text-sm lg:table-cell">
         <div>{balance}</div>
         <div className="text-paleBlue">{balance}</div>
       </td>
 
       {/* Action Buttons */}
-      <td className="w-[270px]  p-3">
-        <div className="flex justify-center gap-2">
+      <td className="">
+        <div className="flex justify-start gap-2">
           <PrimaryButton
             title={"WITHDRAW"}
             customCss="bg-ironBlue text-paleLilac text-sm hover:bg-opacity-70 hover:shadow-lg transition duration-300"

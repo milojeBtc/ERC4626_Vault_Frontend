@@ -64,7 +64,7 @@ const DepositWithdrawDialog = ({
   }, []);
   return (
     <div className="bg-bg-dark fixed inset-0 z-50 flex w-screen items-center justify-center overflow-y-auto bg-opacity-70 shadow-lg backdrop-blur-xl">
-      <div className="relative w-[550px] rounded-lg bg-deepSlate p-10 text-center">
+      <div className="relative w-[95%] rounded-lg bg-deepSlate p-10 text-center sm:w-[550px]">
         <div className="text-2xl">
           {option == "deposit"
             ? "Deposit your fund to the Vault"
@@ -74,14 +74,14 @@ const DepositWithdrawDialog = ({
         <div className="mt-10 rounded-lg bg-slateIron px-4">
           <div className="flex justify-between p-4">
             <input
-              className="no-hover-input text-xl"
+              className="no-hover-input w-full text-xl"
               type="text"
               value={amount}
               onChange={(e) => setAmount(Number(e.target.value))}
             />
             <div className="flex items-center gap-3">
               <img src={usdc} width="40px" />
-              <div className="text-xl">
+              <div className="text-sm lg:text-xl">
                 {option == "deposit" ? "USDC" : "pUSDC"}
               </div>
             </div>
@@ -97,14 +97,14 @@ const DepositWithdrawDialog = ({
         <div className="mt-10 rounded-lg bg-slateIron px-4">
           <div className="flex justify-between p-4">
             <input
-              className="no-hover-input text-xl"
+              className="no-hover-input w-full text-xl"
               type="text"
               value={amount}
               readOnly
             />
             <div className="flex items-center gap-3">
               <img src={usdc} width="40px" />
-              <div className="text-xl">
+              <div className="text-sm lg:text-xl">
                 {option == "deposit" ? "pUSDC" : "USDC"}
               </div>
             </div>
